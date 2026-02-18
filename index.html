@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trait-Capability Entanglement in LLMs</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(14px, 2.5vw, 16px);
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #faf9f7;
+      padding: 20px clamp(16px, 5vw, 48px) 60px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .header .course {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .header .meta {
+      font-size: 13px;
+      color: #888;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .claim {
+      background: #f0ede8;
+      border-left: 3px solid #1a1a1a;
+      padding: 14px 16px;
+      margin-bottom: 28px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .claim strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    section h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .evidence-item {
+      margin-bottom: 16px;
+      padding-left: 14px;
+      border-left: 2px solid #ccc;
+    }
+
+    .evidence-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .qa-item {
+      margin-bottom: 18px;
+    }
+
+    .qa-item .q {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .qa-item .a {
+      font-size: 15px;
+      color: #333;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: #e8e4de;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .refs {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.7;
+    }
+
+    .refs p {
+      margin-bottom: 4px;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #ccc;
+      margin: 28px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="course">Phil 366C · Philosophy of Cognitive Science and Artificial Intelligence</div>
+    <h1>Trait-Capability Entanglement in LLMs</h1>
+    <div class="meta">Rosa Cao & Thomas Icard</div>
+  </div>
+
+  <div class="claim">
+    <strong>Claim</strong>
+    <a href="https://www.anthropic.com/research/persona-vectors">Lindsey et al.'s persona vectors blog post</a> reports
+    that removing trait vectors like evil degrades general capabilities and that semantically unrelated traits shift
+    together under emergent misalignment, but treats these as incidental findings. I argue that these observations
+    reveal something fundamental: traits and capabilities are not separable properties but emerge from shared
+    representational structure, and recent work on superposition and convergent misalignment directions provides deeper
+    understanding for why we should expect this.
+  </div>
+
+  <section>
+    <h2>Argument</h2>
+    <p>Lindsey et al. presented persona vectors, which are activation patterns that correspond to traits
+      like evil, sycophancy, and hallucination. They showed that subtracting a vector at inference time suppresses the
+      corresponding trait. But when they removed the evil vector, the model's general reasoning also got worse. Its MMLU
+      score dropped. They also found that fine-tuning a model on math mistakes simultaneously made it more evil, more
+      sycophantic, and more prone to hallucination. These traits have nothing to do with each other, but they all moved
+      together.</p>
+    <p>The blog post acknowledges the capability degradation but dismisses it as unsurprising (<a
+        href="https://www.anthropic.com/research/persona-vectors#:~:text=(unsurprisingly%2C%20given%20we%E2%80%99re%20tampering%20with%20its%20brain).">"given
+        we're tampering with its brain"</a>), then moves on to propose preventative steering as a better engineering
+      fix. I think this finding deserves more attention.</p>
+  </section>
+
+  <section>
+    <h2>Why This Happens</h2>
+
+    <div class="evidence-item">
+      <div class="label">Elhage et al. 2022 · Arxiv</div>
+      <p>LLMs need to represent far more features than they have dimensions. So features get packed into overlapping
+        directions in activation space (i.e., superposition), and individual neurons end up responding to
+        multiple unrelated concepts (i.e., polysemanticity). The direction that encodes evil overlaps with directions
+        that support general reasoning. When you remove one, you damage the other.</p>
+    </div>
+
+    <div class="evidence-item">
+      <div class="label">Soligo et al. 2025 · ICML Workshop</div>
+      <p>Models finetuned on completely different datasets (insecure code, bad medical advice, dangerous sports advice)
+        all ended up at the same misalignment direction in activation space. A direction extracted from one model could
+        be used to remove misalignment from a completely different model. If the overlap were accidental, models trained
+        on different data would not converge like this.</p>
+    </div>
+
+  </section>
+
+  <section>
+    <h2>Implication</h2>
+    <p>Post-hoc alignment, such as subtracting trait vectors at inference time, faces a structural
+      limitation. Traits and capabilities sit on the same representational substrate, so removing one
+      without affecting the other is not just an engineering challenge to be solved with better tools.
+      Alignment may need to happen during training, not after the fact.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>References</h2>
+    <div class="refs">
+      <p>Chen, R. et al. (2025). Persona vectors: Monitoring and controlling character traits in language models.
+        Anthropic. <a href="https://arxiv.org/abs/2507.21509">Link</a></p>
+      <p>Elhage, N. et al. (2022). Toy models of superposition. Arxiv. <a
+          href="https://arxiv.org/abs/2209.10652">Link</a></p>
+      <p>Soligo, A. et al. (2025). Convergent linear representations of emergent misalignment. ICML Workshop 2025. <a
+          href="https://arxiv.org/abs/2506.11618">Link</a></p>
+    </div>
+  </section>
+
+</body>
+
+</html>
