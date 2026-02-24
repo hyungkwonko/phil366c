@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Does It Mean to "Interpret" in an Almost-AGI Era?</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: clamp(14px, 2.5vw, 16px);
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #faf9f7;
+      padding: 20px clamp(16px, 5vw, 48px) 60px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .header .course {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .header .meta {
+      font-size: 13px;
+      color: #888;
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .claim {
+      background: #f0ede8;
+      border-left: 3px solid #1a1a1a;
+      padding: 14px 16px;
+      margin-bottom: 28px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .claim strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+    }
+
+    section {
+      margin-bottom: 28px;
+    }
+
+    section h2 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 20px;
+    }
+
+    section h3:first-child {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    .evidence-item {
+      margin-bottom: 16px;
+      padding-left: 14px;
+      border-left: 2px solid #ccc;
+    }
+
+    .evidence-item .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 2px;
+    }
+
+    .qa-item {
+      margin-bottom: 18px;
+    }
+
+    .qa-item .q {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .qa-item .a {
+      font-size: 15px;
+      color: #333;
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      background: #e8e4de;
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+
+    .refs {
+      font-size: 12px;
+      color: #777;
+      line-height: 1.7;
+    }
+
+    .refs p {
+      margin-bottom: 4px;
+    }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #ccc;
+      margin: 28px 0;
+    }
+
+    .figure-placeholder {
+      background: #eae7e1;
+      border: 1px dashed #bbb;
+      border-radius: 4px;
+      padding: 32px 16px;
+      text-align: center;
+      margin: 18px 0;
+      color: #999;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .figure-placeholder .fig-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .discussion-item {
+      margin-bottom: 10px;
+      padding-left: 14px;
+      border-left: 2px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="course">Phil 366C · Philosophy of Cognitive Science and Artificial Intelligence</div>
+    <h1>What Does It Mean to &ldquo;Interpret&rdquo; in an Almost-AGI Era?</h1>
+    <div class="meta">Discussion session · Been Kim guest lecture</div>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+
+  <div class="claim">
+    <strong>Overview</strong>
+    Post-hoc explanation methods face a credibility crisis: saliency maps from trained and untrained networks can look
+    nearly identical. If your method cannot distinguish a model that has learned something from one that has not, it is
+    either not tracking the model or our human vocabulary cannot express what the model is doing. Kim argues for a shift
+    from inspecting models after the fact to making interpretability an interactive, teaching-oriented process.
+  </div>
+
+  <section>
+    <h2>Summary of Presentation</h2>
+
+    <p>Complete understanding of large models — defined as mathematical proof of what the system will do — is likely out
+      of reach. Models have too many parameters for humans to digest, there are too many models changing daily, and
+      agents composed of many models make decisions together over extended periods. Each layer compounds the
+      impossibility.</p>
+
+    <p>This motivates two streams. <em>Micro</em> (mechanistic) interpretability aims to understand specific things
+      exhaustively: the tree. <em>Macro</em> (agentic) interpretability aims to understand well enough to do something
+      useful: the forest. A method pursues agentic interpretability if it proactively assists human understanding in a
+      multi-turn interactive process by developing a mental model of the user, enabling humans to build better mental
+      models of the LLM.</p>
+
+    <p>The human and machine language circles do not fully overlap. The same word can mean something subtly different to
+      each. If macro interpretability is going to work, humans need to grow their circle outward — aided by neologisms
+      (new learnable concepts) that enable useful abstractions, compositionality, and a language-level interface for
+      control. Kim's chess study showed grandmasters could absorb superhuman concepts by bypassing language entirely,
+      but
+      most domains cannot do this.</p>
+
+    <p>Kim proposed a Pareto frontier framing for measuring interpretability progress: transfer efficiency (inverse
+      human
+      cost) on the x-axis, task complexity on the y-axis. Progress should mean pushing this frontier for everyone, not
+      just experts.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===================== DISCUSSION ===================== -->
+
+  <section>
+    <h2>Questions &amp; Discussion Points</h2>
+
+    <h3>1. Two interpretability aims: micro vs. macro</h3>
+
+    <img src="fig1.png" style="width:100%; border-radius:4px; margin:18px 0;">
+
+    <div class="discussion-item">
+      <p>Micro interpretability targets well-defined, high-stakes behaviors — the tree. Macro interpretability targets
+        less well-defined, beyond-human behaviors for daily use — the forest. What is the minimum standard of adequacy
+        for macro interpretability?</p>
+    </div>
+  </section>
+
+  <section>
+    <h3>2. Teaching superhuman concepts</h3>
+
+    <img src="fig2.png" style="width:100%; border-radius:4px; margin:18px 0;">
+
+    <div class="discussion-item">
+      <p>A key reason the chess study worked is that grandmasters did not need verbal explanations — they saw the board
+        and connected the dots. Kim explicitly noted "we kind of bypassed the language part." In most other domains —
+        science, law, policy — you cannot bypass language. The explanation <em>is</em> the thing. Does this reintroduce
+        all the problems of semantic misalignment that chess conveniently avoided?</p>
+    </div>
+  </section>
+
+  <section>
+    <h3>3. Neologisms</h3>
+
+    <img src="fig3.png" style="width:100%; border-radius:4px; margin:18px 0;">
+
+    <div class="discussion-item">
+      <p>The machine-to-human direction relies on interpretability and self-verbalization, with plug-in evaluations to
+        check transfer. Both Kim and Steinhardt use the term "agentic interpretability," but their emphases differ: Kim
+        centers on teaching — expanding what humans understand through interactive dialogue. Steinhardt centers on
+        oversight — building specialized AI that surfaces failure modes humans would miss. Are these complementary
+        halves
+        of the same project, or fundamentally different goals?</p>
+    </div>
+  </section>
+
+  <section>
+    <h3>4. Pareto frontier</h3>
+
+    <img src="fig4.png" style="width:100%; border-radius:4px; margin:18px 0;">
+
+    <div class="discussion-item">
+      <p>What are the right axes for measuring "interpretability progress" for (a) experts vs. (b) lay users?</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section>
+    <h2>References</h2>
+    <div class="refs">
+      <p>Schut, L. et al. (2025). Bridging the human-AI knowledge gap through concept discovery and transfer in
+        AlphaZero. <em>PNAS</em> 122(13). <a href="https://www.pnas.org/doi/10.1073/pnas.2406675122">Link</a></p>
+      <p>Hewitt, J., Tafjord, O., Geirhos, R. &amp; Kim, B. (2025). Neologism learning for controllability and
+        self-verbalization. <a href="https://arxiv.org/abs/2510.08506">Link</a></p>
+      <p>Kim, B. et al. (2025). Because we have LLMs, we can and should pursue agentic interpretability. <a
+          href="https://arxiv.org/abs/2506.12152">Link</a></p>
+      <p>Hewitt, J., Geirhos, R. &amp; Kim, B. (2025). We can't understand AI using our existing vocabulary. <em>ICML
+          2025 Position Paper</em>. <a href="https://arxiv.org/abs/2502.07586">Link</a></p>
+      <p>Kim, B. (2025). The Pareto frontier of human-centered AI. <a
+          href="https://medium.com/@beenkim/the-pareto-frontier-of-human-centered-ai-54f90ba5872c">Link</a></p>
+      <p>Adebayo, J. et al. (2018). Sanity checks for saliency maps. <em>NeurIPS 2018</em>. <a
+          href="https://arxiv.org/abs/1810.03292">Link</a></p>
+    </div>
+  </section>
+
+</body>
+
+</html>
